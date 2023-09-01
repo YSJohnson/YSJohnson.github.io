@@ -33,12 +33,12 @@
                    每晚灯火阑珊处，夜难寐，加班狂。
 
 -->
+if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
+  location.replace(`https://${location.hostname}${location.pathname}${location.search}`);
+}
 <!DOCTYPE html>
 <html>
  <head> 
-	 if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
-  location.replace(`https://${location.hostname}${location.pathname}${location.search}`);
-}
   <title>YSJohnson Homepage</title> 
   <meta name="description" content="YSJohnson's Homepage" /> 
   <meta charset="utf-8" /> 
