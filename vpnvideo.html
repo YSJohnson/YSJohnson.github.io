@@ -1,18 +1,114 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>vpn视频</title>
+  <meta charset="UTF-8">
+  <title>遵守法律 健康上网</title>
   <style>
-    video {
+    body {
+      background-color: #f2faff;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+    h1 {
+      text-align: center;
+      padding: 20px 0;
+      background-color: #2eaff8;
+      color: #fff;
+      margin: 0;
+    }
+    .container {
+      max-width: 800px;
+      width: 90%;
+      margin: 0 auto;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .video-select {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .video-player {
+      text-align: center;
+    }
+    .video-player video {
       width: 100%;
+      max-width: 800px;
       height: auto;
     }
   </style>
 </head>
 <body>
-  <video autoplay controls>
-    <source src="vpn.mp4" type="video/mp4">
-    Your browser does not support the video tag. 你的浏览器不支持此视频播放 请换一个浏览器再试！
-  </video>
+  <h1>遵守法律 健康上网</h1>
+  <div class="container">
+    <div class="video-select">
+		<label for="videoSelect">本站采用m3u8加速视频播放 等待10s左右<br><br></label>
+		<label for="videoSelect">在外冲浪 看看就好 不要违反法律法规 发表违法言论<br><br></label>
+		<label for="videoSelect">魔法工具 梯子 VPN请访问 ysjohnson.love/NavigationPage/index.html<br><br></label>
+      <label for="videoSelect">请选择一个视频：</label>
+      <select id="videoSelect" onchange="loadVideo()">
+        <option value="">选一个看吧</option>
+        <option value="https://ysjohnson.love/vpnvideo/vpn.m3u8">视频1</option>
+        <option value="https://ysjohnson.love/vpnvideo/vpn2.m3u8">视频2</option>
+        <!--<option value="video3.m3u8">视频3</option>
+        <option value="video4.m3u8">视频4</option>
+        <option value="video5.m3u8">视频5</option>-->
+      </select>
+    </div>
+	
+    <div class="video-player">
+      <video id="videoPlayer" controls>
+        <!-- 默认显示提示信息 -->
+        暂无视频，请选择一个视频进行播放。
+      </video>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <script>
+    function loadVideo() {
+      var videoSelect = document.getElementById("videoSelect");
+      var videoPlayer = document.getElementById("videoPlayer");
+      var selectedVideo = videoSelect.value;
+      var hls;
+
+      if (selectedVideo) {
+        if (Hls.isSupported()) {
+          hls = new Hls();
+          hls.loadSource(selectedVideo);
+          hls.attachMedia(videoPlayer);
+          hls.on(Hls.Events.MEDIA_ATTACHED, function () {
+            videoPlayer.play();
+          });
+        } else {
+          // 如果浏览器不支持 HLS，则使用备选方案，例如 Flash 播放器
+          videoPlayer.src = "fallback_video.mp4";
+        }
+      } else {
+        videoPlayer.src = "";
+        // 如果没有选择视频，则显示提示信息
+        videoPlayer.textContent = "暂无视频，请选择一个视频进行播放。";
+      }
+    }
+
+    window.onresize = function() {
+      // 根据窗口大小自适应页面大小
+      var container = document.querySelector(".container");
+      var videoPlayer = document.getElementById("videoPlayer");
+      var videoWidth = videoPlayer.clientWidth;
+      
+      if (window.innerWidth <= videoWidth) {
+        container.style.width = "100%";
+      } else {
+        container.style.width = "90%";
+      }
+    };
+
+    // 页面加载时触发一次自适应页面大小函数
+    window.onload = function() {
+      window.onresize();
+    };
+  </script>
 </body>
 </html>
