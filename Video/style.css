@@ -1,0 +1,270 @@
+html,body {
+  height: 100%;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+html,body,p,input,label,button,h1,h2,h3,ul,li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font: normal 12px/1.8 'Microsoft YaHei', Helvetica, Tahoma, Arial, sans-serif;
+}
+
+.clearfix,ul.table li {
+  zoom: 1;
+}
+
+.clearfix:before, ul.table li:before, .clearfix:after, ul.table li:after {
+  content: " ";
+  display: table;
+  clear: both;
+}
+
+body {
+  color: #394356;
+  background: #30333C;
+}
+
+a {
+  color: #F00;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+h1 {
+  font-size: 24px;
+}
+
+h2, h3 {
+  font-size: 18px;
+}
+
+p span {
+  display: -webkit-inline-box;
+  line-height: 2;
+}
+
+#laycon, .layui-layer .layui-layer-title {
+  font-size: 12px;
+}
+
+.layui-layer .layui-layer-title {
+  text-align: center;
+  padding: 0;
+  letter-spacing: 1em;
+}
+
+.layui-layer .layui-layer-content {
+  padding: 20px;
+}
+
+#main {
+  width: 720px;
+  min-width: 450px;
+  margin: 0 auto;
+  background-color: #DAD8D9;
+  -moz-box-shadow: 0 0 40px rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: 0 0 40px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.15);
+}
+
+.admin a {
+  color: #394356;
+}
+
+.header {
+  background-color: #66B1FF;
+  color: #FFFFFF;
+  text-align: center;
+  padding: 20px;
+}
+
+.header a {
+  color: #FFFFFF;
+}
+
+.header a:hover {
+  color: #FFF;
+}
+
+ul.navi li {
+  position: relative;
+  float: left;
+  text-align: center;
+  width: 20%;
+  line-height: 50px;
+}
+
+ul.navi li a {
+  display: block;
+  background-color: #FFFFFF;
+  color: #394356;
+  border-left: 1px solid #AFB0BF;
+  cursor: pointer;
+}
+
+ul.navi li a.fst, ul.navi li.fst a {
+  border-left: none;
+}
+
+ul.navi li a:hover, ul.navi li.tabx a.active {
+  background-color: #A1A4AD;
+}
+
+ul.navi li div.sec {
+  z-index: 1;
+  position: absolute;
+  left: 0;
+  display: none;
+  width: 100%;
+  border-right: 1px solid #AFB0BF;
+}
+
+ul.navi li div.sec a {
+  border-bottom: 1px solid #AFB0BF;
+}
+
+#playpanel select, #playpanel input, #playpanel button {
+  color: #FFFFFF;
+  float: left;
+  border: none;
+  height: 45px;
+  line-height: 45px;
+}
+
+#playpanel select {
+  background: #9090A5;
+  width: 100px;
+  padding: 0 10px;
+}
+
+#playpanel input {
+  background: #AFB0BF;
+  color: #FFFFFF;
+  padding: 0 10px;
+  width: 520px;
+}
+
+#playpanel button {
+  background-color: #9090A5;
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
+  width: 80px;
+}
+
+#player {
+  height: 420px;
+}
+
+#player .body p {
+  text-align: center;
+}
+
+.body {
+  padding: 20px;
+}
+
+.body p {
+  line-height: 2;
+  margin: 1em 0;
+}
+
+.body p span {
+  display: block;
+  text-align: center;
+}
+
+.body p span img {
+  max-width: 100%;
+  border: 5px solid #30333C;
+  border-radius: 5px;
+}
+
+.body p a {
+  text-decoration: underline;
+  color: #394356;
+}
+
+.body p a:hover {
+  color: #F00;
+}
+
+ul.list li {
+  line-height: 50px;
+  border-top: 1px solid #AFB0BF;
+  padding: 0 20px;
+}
+
+ul.tip li {
+  position: relative;
+}
+
+ul.tip li span {
+  width: 33.3333333%;
+  float: left;
+  display: block;
+}
+
+ul.tip li #HB {
+  position: absolute;
+  right: 10px;
+  top: 8px;
+}
+
+ul.table li {
+  padding: 0;
+}
+
+ul.table li div {
+  float: left;
+  text-align: center;
+}
+
+ul.table li div.x {
+  width: 8.33333333333333%;
+}
+
+ul.table li div.x2 {
+  width: 16.66666666666667%;
+}
+
+ul.table li div.x3 {
+  width: 24.99999999999999%;
+}
+
+ul.table li div:hover {
+  background-color: #D0CECF;
+}
+
+ul.table li div a {
+  color: #394356;
+}
+
+ul.table li div a, ul.table li div i {
+  cursor: pointer;
+  font-weight: normal;
+  font-style: normal;
+  display: block;
+  border-left: 1px solid #d0cecf;
+}
+
+ul.table li div a, ul.table li div i, ul.table li div b {
+  font-weight: normal;
+  font-style: normal;
+}
+
+.footer {
+  margin: 0 auto;
+  padding: 20px;
+}
+
+@media screen and (max-width: 600px) {
+  #main {
+    width: 100%;
+  }
+}
