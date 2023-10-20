@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>短视频解析</title>
+	<style>
+		body {
+			background-color: #66B1FF; /* 深蓝色背景 */
+			color: #ffffff; /* 白色字体 */
+			font-family: Arial, sans-serif;
+		}
+
+		h1 {
+			text-align: center;
+		}
+
+		.container {
+			width: 80%;
+			margin: 0 auto;
+			padding: 20px;
+			text-align: center;
+		}
+
+		.input-box {
+			margin-bottom: 20px;
+		}
+
+		.input-box input {
+			width: 100%;
+			padding: 10px;
+			font-size: 16px;
+			border: none;
+			border-radius: 5px;
+		}
+
+		.input-box input::placeholder {
+			color: #808080; /* 灰色提示文字 */
+		}
+
+		.button {
+			display: inline-block;
+			background-color: #4E6EF2; /* 深蓝绿色按钮 */
+			color: #ffffff;
+			padding: 10px 30px; /* 修改按钮宽度 */
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+
+		.clear-button {
+			display: inline-block;
+			background-color: #808080; /* 灰色按钮 */
+			color: #ffffff;
+			padding: 10px 20px;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			margin-left: 10px;
+		}
+
+		.download-button {
+			display: inline-block;
+			background-color: #4E6EF2; /* 深蓝绿色按钮 */
+			color: #ffffff;
+			padding: 10px 20px;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			margin-left: 10px;
+		}
+
+		.label {
+			display: block;
+			margin-bottom: 10px;
+			font-weight: bold;
+		}
+
+		.video-player {
+			width: 100%;
+			height: auto;
+			background-color: #dcdcdc; /* 灰色视频播放框 */
+			margin-top: 20px;
+		}
+
+		.group-box {
+			border: 1px solid #ffffff; /* 白色边框 */
+			border-radius: 5px;
+			padding: 10px;
+			margin-bottom: 20px;
+		}
+
+		.hidden {
+			display: none;
+		}
+
+		.result {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+			margin-top: 20px;
+		}
+
+		.link {
+			color: #ffffff;
+			text-decoration: underline;
+			margin-top: 10px;
+		}
+
+		@media (max-width: 768px) {
+  			.container {
+    			width: 90%;
+  			}
+		}
+	</style>
+	<script>
+		function parseVideo() {
+			var inputUrl = document.querySelector('input').value;
+			var apiUrl = 'https://api.linhun.vip/api/xbys?url=' + encodeURIComponent(inputUrl);
+
+			fetch(apiUrl)
+				.then(response => response.json())
+				.then(data => {
+					if (data.code === 200) {
+						document.getElementById('status').innerText = '解析成功';
+						document.getElementById('title').innerText = data.title;
+						document.getElementById('videoPlayer').src = data.video;
+						document.getElementById('downloadButton').href = data.video; /* 添加下载链接 */
+						document.getElementById('downloadButton').classList.remove('hidden'); /* 显示下载按钮 */
+						showResult();
+					} else {
+						document.getElementById('status').innerText = '解析失败';
+						document.getElementById('downloadButton').classList.add('hidden'); /* 隐藏下载按钮 */
+					}
+				})
+				.catch(error => {
+					document.getElementById('status').innerText = '解析失败';
+					console.error('解析视频失败:', error);
+					document.getElementById('downloadButton').classList.add('hidden'); /* 隐藏下载按钮 */
+				});
+		}
+
+		function clearResult() {
+			document.querySelector('input').value = '';
+			document.getElementById('status').innerText = '';
+			document.getElementById('title').innerText = '';
+			document.getElementById('videoPlayer').src = '';
+			document.getElementById('downloadButton').classList.add('hidden'); /* 隐藏下载按钮 */
+			hideResult();
+		}
+
+		function showResult() {
+			var resultElements = document.getElementsByClassName('result');
+			for (var i = 0; i < resultElements.length; i++) {
+				resultElements[i].classList.remove('hidden');
+			}
+		}
+
+		function hideResult() {
+			var resultElements = document.getElementsByClassName('result');
+			for (var i = 0; i < resultElements.length; i++) {
+				resultElements[i].classList.add('hidden');
+			}
+		}
+
+	</script>
+</head>
+<body>
+	<div class="container">
+		<h1>短视频解析</h1>
+		<div class="input-box group-box">
+			<input type="text" placeholder="在这里粘贴链接 无须去除文字 直接复制黏贴即可 不能有#">
+			<button class="button" onclick="parseVideo()">解析</button>
+			<button class="clear-button" onclick="clearResult()">清空</button>
+			<a id="downloadButton" class="download-button hidden" download>下载</a> <!-- 添加下载按钮 -->
+		</div>
+		<div class="result group-box hidden">
+			<div class="status">
+				<span id="status"></span>
+			</div>
+			<div class="title">
+				<span id="title"></span>
+			</div>
+			<div class="video-player group-box">
+				<video id="videoPlayer" controls></video>
+			</div>
+			<div class="description">
+				<p>支持筷手，斗音等几乎全网所有主流短视频平台</p>
+				<p>资源来自互联网，仅供学习交流，请勿用于商业用途</p>
+				<p>©2023-2023 YSJohnson All Right Reserved.</p>
+				<p><a class="link" href="https://ysjohnson.love" target="_blank">https://ysjohnson.love 网站失效请反馈</a></p>
+			</div>
+		</div>
+		
+	</div>
+</body>
+</html>
