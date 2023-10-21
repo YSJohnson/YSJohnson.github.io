@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>蓝奏云直链解析-YSJ</title>
+  <link rel="icon" href="https://ysjohnson.love/images/favicon.ico" type="image/x-icon">
+  <style>
+    body {
+      background-color: #e0edf5;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+          margin: 20px auto;
+          max-width: 600px;
+          background-color: #fff;
+          padding: 20px;
+          border-radius: 5px;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+    h1 {
+      text-align: center;
+      color: #0066cc;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    .btn-container {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #0066cc;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+
+    .download-btn {
+      display: none;
+      padding: 10px 20px;
+      background-color: #009900;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .group {
+      border: 1px solid #ddd;
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+
+    .label {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .tag {
+      display: block;
+      padding: 5px 10px;
+      background-color: #f2f2f2;
+      color: #333;
+      border-radius: 5px;
+      margin-bottom: 5px;
+      word-break: break-all;
+    }
+  </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var form = document.querySelector('form');
+      var parseBtn = document.querySelector('.btn');
+      var resetBtn = document.querySelector('.btn[type="reset"]');
+      var downloadBtn = document.querySelector('.download-btn');
+      var tags = document.querySelectorAll('.tag');
+
+      parseBtn.addEventListener('click', function(event) {
+        event.preventDefault(); // 阻止表单默认提交行为
+
+        var linkInput = document.querySelector('input[name="link"]');
+        var pwdInput = document.querySelector('input[name="pwd"]');
+
+        var apiUrl = "https://api.kit9.cn/api/lanzouyun_netdisc/api.php?link=" + encodeURIComponent(linkInput.value) + "&pwd=" + encodeURIComponent(pwdInput.value);
+
+        fetch(apiUrl)
+          .then(function(response) {
+            return response.json();
+          })
+          .then(function(data) {
+            if (data.code === 200) {
+              var downloadLink = data.data.download_link;
+              var downloadLinkTag = document.querySelector('.tag:nth-child(6)');
+              downloadLinkTag.textContent = downloadLink;
+
+              var downloadUrl = "";
+              if(downloadLink.startsWith("http")){
+                downloadUrl = downloadLink;
+              }else{
+                downloadUrl = "https://" + downloadLink;
+              }
+              downloadBtn.href = downloadUrl;
+              downloadBtn.style.display = 'inline-block';
+
+              tags[0].textContent = "解析成功";
+              tags[1].textContent = "文件名：" + data.data.file_name;
+              tags[2].textContent = "上传者：" + data.data.file_author;
+              tags[3].textContent = "上传时间：" + data.data.file_time;
+              tags[4].textContent = "文件大小：" + data.data.file_size;
+              tags[5].innerHTML = "文件直链：<br>" + downloadLink.replace(/(.{50})/g,'$1<br>');
+            } else {
+              tags[0].textContent = "解析失败";
+              tags[1].textContent = "";
+              tags[2].textContent = "";
+              tags[3].textContent = "";
+              tags[4].textContent = "";
+              tags[5].textContent = "";
+            }
+          })
+          .catch(function(error) {
+            console.error('发生错误:', error);
+          });
+      });
+
+      resetBtn.addEventListener('click', function() {
+        tags[0].textContent = "";
+        tags[1].textContent = "";
+        tags[2].textContent = "";
+        tags[3].textContent = "";
+        tags[4].textContent = "";
+        tags[5].textContent = "";
+        downloadBtn.style.display = 'none';
+      });
+    });
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1>蓝奏云直链解析</h1>
+    <form>
+      <input type="text" name="link" placeholder="在这里粘贴链接">
+      <input type="text" name="pwd" placeholder="在这里输入提取码 没有则不填">
+      <div class="btn-container">
+        <button type="submit" class="btn">解析</button>
+        <button type="reset" class="btn">清空</button>
+        <a href="#" class="download-btn">下载</a>
+      </div>
+    </form>
+    <div class="group">
+      <div class="label">信息：<div>
+      <span class="tag"></span>
+      <span class="tag"></span>
+      <span class="tag"></span>
+      <span class="tag"></span>
+      <span class="tag"></span>
+      <span class="tag"></span>
+    </div>
+  </div>
+  <div class="group">
+    <div class="label">蓝奏云直链解析<div>
+    <div class="label">资源来自互联网，仅供学习交流，请勿用于商业用途<div>
+    <div class="label">©2023 YSJohnson All Right Reserved.<div>
+    <p><a class="link" href="https://ysjohnson.love" target="_blank">https://ysjohnson.love 网站失效请反馈</a></p>
+  </div>
+</body>
+</html>
