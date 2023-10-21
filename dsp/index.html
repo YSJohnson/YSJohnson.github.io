@@ -1,11 +1,19 @@
+<!--
+————————————————————————————
+短视频解析 By YSJohnson
+https://ysjohnson.love/
+
+恶意流量会被拉黑ip 合理使用！
+————————————————————————————
+-->
 <!DOCTYPE html>
 <html>
 <head>
 	<title>短视频解析</title>
 	<style>
 		body {
-			background-color: #66B1FF; /* 深蓝色背景 */
-			color: #ffffff; /* 白色字体 */
+			background-color: #66B1FF;
+			color: #ffffff;
 			font-family: Arial, sans-serif;
 		}
 
@@ -33,14 +41,14 @@
 		}
 
 		.input-box input::placeholder {
-			color: #808080; /* 灰色提示文字 */
+			color: #808080;
 		}
 
 		.button {
 			display: inline-block;
-			background-color: #4E6EF2; /* 深蓝绿色按钮 */
+			background-color: #4E6EF2;
 			color: #ffffff;
-			padding: 10px 30px; /* 修改按钮宽度 */
+			padding: 10px 30px;
 			border: none;
 			border-radius: 5px;
 			cursor: pointer;
@@ -48,7 +56,7 @@
 
 		.clear-button {
 			display: inline-block;
-			background-color: #808080; /* 灰色按钮 */
+			background-color: #808080;
 			color: #ffffff;
 			padding: 10px 20px;
 			border: none;
@@ -59,7 +67,7 @@
 
 		.download-button {
 			display: inline-block;
-			background-color: #4E6EF2; /* 深蓝绿色按钮 */
+			background-color: #4E6EF2;
 			color: #ffffff;
 			padding: 10px 20px;
 			border: none;
@@ -77,12 +85,12 @@
 		.video-player {
 			width: 100%;
 			height: auto;
-			background-color: #dcdcdc; /* 灰色视频播放框 */
+			background-color: #dcdcdc; 
 			margin-top: 20px;
 		}
 
 		.group-box {
-			border: 1px solid #ffffff; /* 白色边框 */
+			border: 1px solid #ffffff; 
 			border-radius: 5px;
 			padding: 10px;
 			margin-bottom: 20px;
@@ -115,7 +123,7 @@
 	<script>
 		function parseVideo() {
 			var inputUrl = document.querySelector('input').value;
-			var apiUrl = 'https://api.linhun.vip/api/xbys?url=' + encodeURIComponent(inputUrl);
+			var apiUrl = 'https://api.linhun.vip/api/xbys?url=' + encodeURIComponent(inputUrl) + "&apiKey=5788ec34a904ebcba54b599c7d6d061f";
 
 			fetch(apiUrl)
 				.then(response => response.json())
@@ -124,18 +132,18 @@
 						document.getElementById('status').innerText = '解析成功';
 						document.getElementById('title').innerText = data.title;
 						document.getElementById('videoPlayer').src = data.video;
-						document.getElementById('downloadButton').href = data.video; /* 添加下载链接 */
-						document.getElementById('downloadButton').classList.remove('hidden'); /* 显示下载按钮 */
+						document.getElementById('downloadButton').href = data.video;
+						document.getElementById('downloadButton').classList.remove('hidden');
 						showResult();
 					} else {
 						document.getElementById('status').innerText = '解析失败';
-						document.getElementById('downloadButton').classList.add('hidden'); /* 隐藏下载按钮 */
+						document.getElementById('downloadButton').classList.add('hidden');
 					}
 				})
 				.catch(error => {
 					document.getElementById('status').innerText = '解析失败';
 					console.error('解析视频失败:', error);
-					document.getElementById('downloadButton').classList.add('hidden'); /* 隐藏下载按钮 */
+					document.getElementById('downloadButton').classList.add('hidden');
 				});
 		}
 
@@ -144,7 +152,7 @@
 			document.getElementById('status').innerText = '';
 			document.getElementById('title').innerText = '';
 			document.getElementById('videoPlayer').src = '';
-			document.getElementById('downloadButton').classList.add('hidden'); /* 隐藏下载按钮 */
+			document.getElementById('downloadButton').classList.add('hidden'); 
 			hideResult();
 		}
 
@@ -171,7 +179,7 @@
 			<input type="text" placeholder="在这里粘贴链接 无须去除文字 直接复制黏贴即可 不能有#">
 			<button class="button" onclick="parseVideo()">解析</button>
 			<button class="clear-button" onclick="clearResult()">清空</button>
-			<a id="downloadButton" class="download-button hidden" download>下载</a> <!-- 添加下载按钮 -->
+			<a id="downloadButton" class="download-button hidden" download>下载</a>
 		</div>
 		<div class="result group-box hidden">
 			<div class="status">
