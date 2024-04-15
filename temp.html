@@ -1,80 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>周杰伦</title>
-    <style>
-        body {
-            background-color: #f1f1f1;
-            font-family: Arial, sans-serif;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-        }
-
-        h1 {
-            color: #2196f3;
-            text-align: center;
-        }
-
-        select, textarea, button {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-
-        button {
-            background-color: #4CAF50;
-            color: white;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>备用联系</title>
+<link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1>周杰伦 圣诞星</h1>
-        <select id="quality">
-            <option value="普通音质">普通音质</option>
-            <option value="极高音质">极高音质</option>
-        </select>
-        <audio id="audioPlayer" controls></audio>
-        <textarea id="editor" rows="4" placeholder="输入歌曲链接"></textarea>
-        <button id="submitBtn">播放</button>
+
+<div class="container">
+  <h1>备用联系</h1>
+  <form id="contact-form">
+    <div class="form-group">
+      <label for="apptoken">apptoken:</label>
+      <input type="text" id="apptoken" name="apptoken" value="at" required>
     </div>
+    <div class="form-group">
+      <label for="topic-id">topic id:</label>
+      <input type="text" id="topic-id" name="topic-id" value="12345" required>
+    </div>
+    <div class="form-group">
+      <label for="message">要发送的消息:</label>
+      <textarea id="message" name="message" rows="4" required></textarea>
+    </div>
+    <button type="submit">发送</button>
+  </form>
+</div>
 
-    <script>
-        const quality = document.getElementById("quality");
-        const audioPlayer = document.getElementById("audioPlayer");
-        const editor = document.getElementById("editor");
-        const submitBtn = document.getElementById("submitBtn");
-
-        quality.addEventListener("change", function() {
-            const selectedQuality = quality.value;
-            if (selectedQuality === "普通音质") {
-                editor.value = "https://vip.123pan.cn/1813240745/%E7%BD%91%E7%AB%99%E6%89%80%E9%9C%80%E7%9B%B4%E9%93%BE/%E5%9C%A3%E8%AF%9E%E6%98%9F-%E5%91%A8%E6%9D%B0%E4%BC%A6-%E6%99%AE%E9%80%9A%E9%9F%B3%E8%B4%A8.mp3";
-            } else if (selectedQuality === "极高音质") {
-                editor.value = "https://vip.123pan.cn/1813240745/%E7%BD%91%E7%AB%99%E6%89%80%E9%9C%80%E7%9B%B4%E9%93%BE/%E5%9C%A3%E8%AF%9E%E6%98%9F-%E5%91%A8%E6%9D%B0%E4%BC%A6-%E6%9E%81%E9%AB%98%E9%9F%B3%E8%B4%A8.mp3";
-            }
-        });
-
-        submitBtn.addEventListener("click", function() {
-            const musicURL = editor.value;
-            audioPlayer.src = musicURL;
-        });
-    </script>
+<script src="script.js"></script>
 </body>
 </html>
