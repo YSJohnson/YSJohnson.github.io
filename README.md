@@ -36,10 +36,11 @@
      - [https://t.alcy.cc/fj](https://t.alcy.cc/fj)
      - [https://picsum.photos](https://picsum.photos)
 
-3. **CDN服务**  
+ **CDN服务**  
    - Tailwind CSS: [https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)
    - Font Awesome: [https://cdn.jsdelivr.net/npm/font-awesome](https://cdn.jsdelivr.net/npm/font-awesome)
 
 ## 📄 许可证
+
 
 [MIT](LICENSE) © 2022-2025 YSJohnson
