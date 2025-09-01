@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YSJohnson - Code Create Life</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#333333',
+                        secondary: '#666666',
+                        accent: '#ffffff',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            }
+            .text-shadow-lg {
+                text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            }
+            .backdrop-blur {
+                backdrop-filter: blur(8px);
+            }
+        }
+        
+        body {
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            transition: background-image 1s ease-in-out;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .content-wrapper {
+            flex: 1;
+        }
+        
+        .main-nav {
+            position: relative;
+            z-index: 50;
+        }
+        
+        .nav-links a {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: white;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover:after,
+        .nav-links a.active:after {
+            width: 100%;
+        }
+        
+        .social-icons a {
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .social-icons a:hover {
+            transform: translateY(-3px);
+            opacity: 0.8;
+        }
+
+        .logo-container {
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo-container:hover {
+            transform: scale(1.03);
+        }
+        
+        .logo-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+            display: block;
+        }
+        
+        .logo-img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .quote-container {
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .nav-border {
+            border: 2.5px solid rgba(255, 255, 255, 0.4);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-border:hover {
+            border-color: rgba(255, 255, 255, 0.6);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            z-index: 100;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-900 text-white">
+    <div class="fixed inset-0 z-0">
+        <img src="" alt="随机风景图" class="w-full h-full object-cover opacity-80">
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <div class="content-wrapper relative z-10">
+        <main class="container mx-auto px-6 md:px-12 pt-24 md:pt-32 pb-10">
+            <div class="flex flex-col items-center text-center">
+                <div class="logo-container w-32 h-32 md:w-40 md:h-40 rounded-full bg-white/10 backdrop-blur flex items-center justify-center mb-10" id="logoContainer">
+                    <img src="logo.png" alt="YSJohnson的Logo" class="logo-img" id="logoImg" data-default="logo.png" data-alt="logo2.png">
+                </div>
+                
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-shadow-lg">YSJohnson</h1>
+                <p class="text-xl md:text-2xl text-white/90 mb-12 text-shadow">Code Create Life</p>
+                
+                <div class="quote-container max-w-md mx-auto bg-black/30 backdrop-blur px-6 py-6 rounded-lg italic text-white/90 mb-10">
+                    <div class="quote-loading">加载中...</div>
+                    <div class="quote-content hidden"></div>
+                    <div class="quote-from mt-2 text-right text-sm text-white/70 hidden"></div>
+                </div>
+                
+                <header class="main-nav nav-border py-4 px-3 md:px-6 relative w-full max-w-md mb-10">
+                    <div class="container mx-auto">
+                        <ul class="nav-links flex flex-wrap justify-center gap-x-6 md:gap-x-8 gap-y-2 text-sm md:text-base font-medium">
+                            <li><a href="https://ysjohnson.github.io/nav" class="inline-block py-2 text-white/90">导航</a></li>
+                            <li><a href="https://ysjohnson.github.io/character" class="inline-block py-2 text-white/90">字符</a></li>
+                            <li><a href="https://ysjohnson.github.io/RedEnvelope" class="inline-block py-2 text-white/90">红包</a></li>
+                            <li><a href="#" class="inline-block py-2 text-white/90">其他</a></li>
+                        </ul>
+                        
+                        <div class="social-icons flex justify-center mt-3 gap-6 text-lg">
+                            <a href="https://github.com/YSJohnson" target="_blank" aria-label="GitHub" class="text-white/90"><i class="fa fa-github"></i></a>
+                            <a href="javascript:void(0);" data-clipboard="1468943602" data-message="已复制QQ号" aria-label="QQ" class="text-white/90"><i class="fa fa-qq"></i></a>
+                            <a href="https://t.me/XiXi_ovooo" target="_blank" aria-label="Telegram" class="text-white/90"><i class="fa fa-paper-plane"></i></a>
+                            <a href="javascript:void(0);" data-clipboard="1468943602@qq.com" data-message="已复制邮箱" aria-label="邮箱" class="text-white/90"><i class="fa fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </header>
+            </div>
+        </main>
+    </div>
+
+    <footer class="relative z-10 py-6 px-6 text-center text-white/60 text-sm mt-auto">
+        <p>© 2022-2025 YSJohnson. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const imageSources = [
+                'https://rpic.origz.com/api.php?category=photography',
+                'https://tu.ltyuanfang.cn/api/fengjing.php',
+                'https://t.alcy.cc/fj',
+                `https://picsum.photos/seed/${Math.random()}/1920/1080`,
+                `https://picsum.photos/seed/${Math.random()}/nature/1920/1080`
+            ];
+            
+            const bgImage = document.querySelector('.fixed img');
+            let currentSourceIndex = 0;
+            let loadTimeout;
+            
+            function tryLoadImage() {
+                if (loadTimeout) clearTimeout(loadTimeout);
+                
+                if (currentSourceIndex >= imageSources.length) {
+                    document.body.style.backgroundColor = '#1a202c';
+                    return;
+                }
+                
+                bgImage.style.opacity = '0';
+                const cacheBuster = new Date().getTime();
+                const urlWithCacheBuster = imageSources[currentSourceIndex] + 
+                    (imageSources[currentSourceIndex].includes('?') ? '&' : '?') + 
+                    `cache=${cacheBuster}`;
+                    
+                bgImage.src = urlWithCacheBuster;
+                
+                loadTimeout = setTimeout(() => {
+                    console.log(`图片加载超时: ${imageSources[currentSourceIndex]}`);
+                    currentSourceIndex++;
+                    tryLoadImage();
+                }, 3000);
+                
+                bgImage.onload = function() {
+                    clearTimeout(loadTimeout);
+                    bgImage.style.transition = 'opacity 0.5s ease';
+                    bgImage.style.opacity = '0.8';
+                };
+                
+                bgImage.onerror = function() {
+                    clearTimeout(loadTimeout);
+                    console.log(`图片加载失败: ${imageSources[currentSourceIndex]}`);
+                    currentSourceIndex++;
+                    tryLoadImage();
+                };
+            }
+            
+            tryLoadImage();
+
+            const quoteContent = document.querySelector('.quote-content');
+            const quoteFrom = document.querySelector('.quote-from');
+            const quoteLoading = document.querySelector('.quote-loading');
+            const quoteContainer = document.querySelector('.quote-container');
+            
+            const hitokotoApi = 'https://v1.hitokoto.cn';
+            const hitokotoParams = {
+                c: ['a', 'b', 'd', 'i', 'h'],
+                min_length: 10,
+                max_length: 30,
+                encode: 'json'
+            };
+            
+            function getHitokotoUrl() {
+                const params = new URLSearchParams();
+                hitokotoParams.c.forEach(type => params.append('c', type));
+                params.append('min_length', hitokotoParams.min_length);
+                params.append('max_length', hitokotoParams.max_length);
+                params.append('encode', hitokotoParams.encode);
+                return `${hitokotoApi}?${params.toString()}`;
+            }
+            
+            async function fetchHitokoto() {
+                try {
+                    const response = await fetch(getHitokotoUrl(), {
+                        method: 'GET',
+                        headers: { 'Accept': 'application/json' },
+                        timeout: 3000
+                    });
+                    
+                    if (!response.ok) throw new Error('接口请求失败');
+                    const data = await response.json();
+                    
+                    quoteContainer.style.opacity = '0';
+                    setTimeout(() => {
+                        quoteContent.textContent = data.hitokoto;
+                        quoteFrom.textContent = `- ${data.from || '未知来源'}`;
+                        quoteLoading.classList.add('hidden');
+                        quoteContent.classList.remove('hidden');
+                        quoteFrom.classList.remove('hidden');
+                        quoteContainer.style.opacity = '1';
+                    }, 300);
+                    
+                } catch (error) {
+                    quoteContainer.style.opacity = '0';
+                    setTimeout(() => {
+                        quoteLoading.classList.add('hidden');
+                        quoteContent.textContent = '所谓宿命，其实都是最好的安排。';
+                        quoteFrom.textContent = '- 《将夜》';
+                        quoteContent.classList.remove('hidden');
+                        quoteFrom.classList.remove('hidden');
+                        quoteContainer.style.opacity = '1';
+                        console.warn('一言加载失败，使用备用名言:', error);
+                    }, 300);
+                }
+            }
+            
+            fetchHitokoto();
+
+            const logoImg = document.getElementById('logoImg');
+            const logoContainer = document.getElementById('logoContainer');
+            let isDefaultLogo = true;
+            
+            logoImg.onerror = function() {
+                this.style.display = 'none';
+                const parentDiv = this.parentElement;
+                parentDiv.innerHTML = `
+                    <div class="text-center">
+                        <div class="text-2xl md:text-3xl font-bold text-white">YSJOHNSON</div>
+                        <div class="text-xs md:text-sm text-white/80 mt-1">Code Create Life</div>
+                    </div>
+                `;
+            };
+            
+            logoContainer.addEventListener('click', function() {
+                if (logoImg.style.display !== 'none') {
+                    isDefaultLogo = !isDefaultLogo;
+                    logoImg.src = isDefaultLogo ? logoImg.dataset.default : logoImg.dataset.alt;
+                    
+                    logoImg.style.opacity = '0';
+                    setTimeout(() => {
+                        logoImg.style.opacity = '1';
+                    }, 300);
+                }
+            });
+
+            const toast = document.getElementById('toast');
+            const copyButtons = document.querySelectorAll('[data-clipboard]');
+            
+            copyButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const textToCopy = this.dataset.clipboard;
+                    const message = this.dataset.message || '已复制内容';
+                    
+                    navigator.clipboard.writeText(textToCopy)
+                        .then(() => {
+                            showToast(message);
+                        })
+                        .catch(err => {
+                            console.error('无法复制内容: ', err);
+                            showToast('复制失败，请手动复制');
+                        });
+                });
+            });
+            
+            function showToast(message) {
+                toast.textContent = message;
+                toast.classList.add('show');
+                
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+</html>
